@@ -1,0 +1,47 @@
+
+"""
+How does the experimental probability of getting Heads change as we 
+increase the number of coin tosses? This code simulates repeated coin 
+tossing and visualizes the Law of Large Numbers using a plot.
+"""
+
+import random
+import matplotlib.pyplot as plt
+
+def run_simulation():
+    coins = ['T', 'H']
+    n = int(input('Enter the number of times to toss the coin: '))
+    h_count = 0
+    tosses = []
+    probs = []
+    print("-" * 60)
+    print(f"{'Trial':<10} | {'Outcome':<10} | {'Heads Count':<15} | P(Head)")
+    print("-" * 60)
+    # Loop for each toss
+    for i in range(1, n + 1):
+        out = random.choice(coins)
+        if out == 'H':
+            h_count += 1
+
+        p = h_count / i
+
+        tosses.append(i)
+        probs.append(p)
+
+        print(f"{i:<10} | {out:<10} | {h_count:<15} | {p:.4f}")
+
+    print("-" * 60)
+
+    if tosses:
+        plt.figure(figsize=(10, 6))
+        plt.plot(tosses, probs, marker='.', linestyle='-', markersize=2, label='Experimental P(H)')
+        plt.axhline(y=0.5, color='r', linestyle='--', label='Theoretical P(H) = 0.5')
+        plt.title('Law of Large Numbers: P(Heads) vs. Number of Tosses')
+        plt.xlabel('Number of Tosses')
+        plt.ylabel('Cumulative P(Heads)')
+        plt.grid(True)
+        plt.legend()
+        plt.ylim(0, 1)
+        plt.xlim(1, n)
+        plt.show()
+run_simulation()
